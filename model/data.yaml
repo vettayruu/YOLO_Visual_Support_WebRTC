@@ -1,5 +1,5 @@
-train: images/train
-val: images/val
+train: dataset/images/train
+val: dataset/images/val
 nc: 5
 names:
 - pack
@@ -7,3 +7,4 @@ names:
 - tip
 - tip_1
 - tip_2
+
