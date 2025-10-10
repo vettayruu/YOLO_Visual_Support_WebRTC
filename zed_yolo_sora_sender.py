@@ -176,10 +176,8 @@ class ZEDStereoSender:
             print(f"送信時間: {duration_seconds}秒")
 
         print("=" * 60)
-        # model_path_seg = "pack_1008.pt"
-        # model_path_seg = "best.pt"
-        model_path_seg = "./yolo/dataset/seg/runs/segment/exp_yolo11_seg/weights/best.pt"
-
+        
+        model_path_seg = "./model/best.pt"
         yolo_seg_left = YOLOSegPose(model_path_seg)
         yolo_seg_right = YOLOSegPose(model_path_seg)
 
@@ -350,4 +348,5 @@ def main():
         stereo_sender.run(args.duration)
 
 if __name__ == "__main__":
+
     main()
