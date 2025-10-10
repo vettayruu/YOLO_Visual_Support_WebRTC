@@ -22,7 +22,7 @@ Labelme supports SAM (Segment Anything Model) integration —
 use AI-Polygon mode for fast and accurate segmentation.
 
 ## 2️⃣ Convert JSON to YOLO Format
-After labeling, convert '.json' files to YOLO-style '.txt' annotations using a conversion script.
+After labeling, convert `.json` files to YOLO-style `.txt` annotations using a conversion script.
 
 **Run conversion:**
 
@@ -32,9 +32,8 @@ python json2yolo.py
 
 Notes:
 
-The class names defined in data.yaml must match those used in json2yolo.py.
-
-Each image should have a corresponding .txt label file with the same filename.
+- The class names defined in `data.yaml` must match those used in `json2yolo.py`.
+- Each image should have a corresponding `.txt` label file with the same filename.
 
 ## 3️⃣ Dataset Directory Structure
 Organize your dataset as follows:
@@ -49,12 +48,11 @@ dataset/
     └── val/
 ```
 
-images/ — contains training and validation images.
-
-labels/ — contains YOLO-format label files (one per image).
+- images/ — contains training and validation images.
+- labels/ — contains YOLO-format label files (one per image).
 
 ## 4️⃣ Configure data.yaml
-data.yaml defines dataset paths and class information.
+`data.yaml` defines dataset paths and class information.
 
 Example:
 ```bash
@@ -65,7 +63,7 @@ nc: 2   # number of classes
 names: ['arm', 'gripper']
 ```
 
-Make sure that class order is consistent with your annotation script.
+Make sure that the class order is consistent with your annotation script.
 
 ## 5️⃣ Train YOLO Segmentation Model
 Use your training script (for example, yolo_model_train_seg.py):
@@ -80,6 +78,5 @@ runs/segment/exp_yolo11_seg/weights/best.pt
 ```
 
 ## Recommendation
-Start with Segmentation Model (YOLO-Seg) for higher accuracy and easier training.
-
-The Pose Model (YOLO-Pose) can be considered for advanced applications once you have a well-labeled dataset.
+- Start with Segmentation Model (YOLO-Seg) for higher accuracy and easier training.
+- The Pose Model (YOLO-Pose) can be considered for advanced applications once you have a well-labeled dataset.
