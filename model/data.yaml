@@ -1,0 +1,9 @@
+train: images/train
+val: images/val
+nc: 5
+names:
+- pack
+- piper
+- tip
+- tip_1
+- tip_2
