@@ -33,6 +33,32 @@ class ZEDStereoSender:
         self.left_sendonly = None
         self.right_sendonly = None
 
+        # Opencv Undistortion parameter
+        # self.K = np.array([[788.11940229, 0., 660.32698318],
+        #               [0., 787.09939768, 346.13751838],
+        #               [0., 0., 1.]], dtype=np.float32)
+        #
+        # self.dist = np.array([[-0.361648028, 0.226732575, -0.0011904765, 0.00026100382, -0.0978096249]], dtype=np.float32)
+
+        self.K = np.array([[788.41415049,   0.,         655.01692926],
+                         [  0.,         787.3765135,  357.82862631],
+                         [  0.,           0.,           1.        ]], dtype=np.float32)
+        # 畸变系数 dist:
+        self.dist =  np.array([[-0.3506601,   0.18558038, -0.00065609,  0.00100313, -0.05786136]], dtype=np.float32)
+
+        # ZED Undistortion parameter
+        # self.K = np.array([[734.8106079101562, 0.,                650.7424926757812],
+        #                          [0.,                734.8106079101562, 355.0272216796875],
+        #                          [0.,                0.,                1.]], dtype=np.float32)
+        # self.dist = np.array([[0., 0., -0., 0., 0.]],
+        #                      dtype=np.float32)
+
+    def undistortion(self, img):
+        h, w = img.shape[:2]
+        newcameramtx, roi = cv2.getOptimalNewCameraMatrix(self.K, self.dist, (w, h), 0, (w, h))
+        undistorted = cv2.undistort(img, self.K, self.dist, None, newcameramtx)
+        return undistorted
+
     def initialize_sora_connections(self):
         """左目と右目のSora接続を初期化"""
         print("Sora接続を初期化中...")
@@ -146,6 +172,9 @@ class ZEDStereoSender:
                     left_frame, right_frame = self.get_frames()
                     sent_frames += 1
 
+                    left_frame = self.undistortion(left_frame)
+                    right_frame = self.undistortion(right_frame)
+
                     if sent_frames % 100 == 0:
                         elapsed = time.time() - start_time
                         print(f"ステレオ送信中... {elapsed:.1f}秒経過 (送信フレーム数: {sent_frames})")
@@ -187,7 +216,7 @@ class ZEDStereoSender:
                     # results = yolo_model(left_frame, verbose=False)
                     # yolo_frame = results[0].plot()
 
-                    if sent_frames % 1000 == 0:
+                    if sent_frames % 100 == 0:
                         # Save image
                         timestamp = int(time.time() * 1000)
                         cv2.imwrite(f'./record/yolo_left/yolo_left_{timestamp}.jpg', left_frame)
