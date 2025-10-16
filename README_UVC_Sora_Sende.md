@@ -3,6 +3,16 @@
 ZED Mini can be used as a **UVC (USB Video Class)** camera, allowing direct access through **OpenCV**.  
 However, OpenCV only provides **raw frames**, which means the images include **lens distortion**.
 
+<div align="center">
+  <img src="./calibration/result/curved_image.jpg" alt="Scene with origin UVC frame" width="1000"/>
+  <p><em>Figure 1: Scene with origin UVC frame.</em></p>
+</div>
+
+<div align="center">
+  <img src="./calibration/result/plane_image.jpg" alt="Scene with undistorted frame" width="1000"/>
+  <p><em>Figure 2: Scene with undistorted frame.</em></p>
+</div>
+
 To correct this distortion, there are two main approaches.
 
 ---
@@ -62,6 +72,8 @@ Capture multiple checkerboard images and run `cv2.calibrateCamera()` to obtain:
 
 ### 2. Apply undistortion
 Details check folder `calibration`
+
+
 
 
 
