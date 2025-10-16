@@ -95,8 +95,24 @@ undistorted = cv2.undistort(img, K, dist, None, newcameramtx)
 ---
 
 ## 3. ZED Mini Undistortion Example
+The original **ZED Mini** intrinsic and distortion parameters are:
 
-The ZED Mini's Undistortion Parameters Result are
+$$
+K =
+\begin{bmatrix}
+734.8106079101562 & 0   & 650.7424926757812 \\
+0   & 734.8106079101562 & 355.0272216796875 \\
+0   & 0   & 1
+\end{bmatrix}
+$$
+
+$$
+dist = [0, 0, 0, 0, 0]
+$$
+
+However, even when using these default parameters, the captured images still exhibit noticeable **distortion** near the edges (Figure 1).
+
+After performing **recalibration using chessboard images**, the refined undistortion parameters are obtained as follows:
 
 $$
 K =
@@ -113,17 +129,17 @@ $$
 
 <div align="center">
   <img src="./result/origin.jpg" alt="System Architecture" width="1000"/>
-  <p><em>Figure 1: Origin image.</em></p>
+  <p><em>Figure 1: Original image captured by the ZED Mini.</em></p>
 </div>
 
 <div align="center">
   <img src="./result/chessboard.jpg" alt="System Architecture" width="1000"/>
-  <p><em>Figure 2: Chessboard Detection Result.</em></p>
+  <p><em>Figure 2: Detected chessboard corners used for calibration.</em></p>
 </div>
 
 <div align="center">
   <img src="./result/undistorted.jpg" alt="System Architecture" width="1000"/>
-  <p><em>Figure 3: Undistortion Result.</em></p>
+  <p><em>Figure 3: Undistorted image after applying refined parameters.</em></p>
 </div>
 
 
