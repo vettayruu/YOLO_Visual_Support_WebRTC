@@ -5,12 +5,12 @@ However, OpenCV only provides **raw frames**, which means the images include **l
 
 <div align="center">
   <img src="./calibration/result/curved_image.jpg" alt="Scene with origin UVC frame" width="1000"/>
-  <p><em>Figure 1: Scene with origin UVC frame.</em></p>
+  <p><em>Figure 1: Curved screne with origin UVC frame.</em></p>
 </div>
 
 <div align="center">
   <img src="./calibration/result/plane_image.jpg" alt="Scene with undistorted frame" width="1000"/>
-  <p><em>Figure 2: Scene with undistorted frame.</em></p>
+  <p><em>Figure 2: Plane screne with undistorted UVC frame.</em></p>
 </div>
 
 To correct this distortion, there are two main approaches.
