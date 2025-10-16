@@ -18,11 +18,11 @@ Radial distortion is caused by the **curvature of the lens elements**, resulting
 The correction model can be expressed as:
 
 $$
-x_{corr} = x (1 + k_1 r^2 + k_2 r^4 + k_3 r^6)
+x_{radial} = x (1 + k_1 r^2 + k_2 r^4 + k_3 r^6)
 $$
 
 $$
-y_{corr} = y (1 + k_1 r^2 + k_2 r^4 + k_3 r^6)
+y_{radial} = y (1 + k_1 r^2 + k_2 r^4 + k_3 r^6)
 $$
 
 ### Tangential Distortion
@@ -33,11 +33,11 @@ causing image points to shift diagonally.
 The correction model is:
 
 $$
-x_{corr} = x + 2p_1xy + p_2(r^2 + 2x^2)
+x_{tan} = x + 2p_1xy + p_2(r^2 + 2x^2)
 $$
 
 $$
-y_{corr} = y + p_1(r^2 + 2y^2) + 2p_2xy
+y_{tan} = y + p_1(r^2 + 2y^2) + 2p_2xy
 $$
 
 where  
@@ -47,6 +47,15 @@ $$r^2 = x^2 + y^2$$
 and the parameters are:  
 - $$k_1, k_2, k_3$$: **radial distortion coefficients**  
 - $$p_1, p_2$$: **tangential distortion coefficients**
+
+The totla Distortion is represented by:
+
+$$
+x_{corr} = x_{radial} + x_{tan}
+$$
+$$
+y_{corr} = y_{radial} + y_{tan}
+$$
 
 ---
 
@@ -65,18 +74,57 @@ f_x & 0   & c_x \\
 $$
 
 Here:  
-- \(f_x, f_y\) are the **focal lengths** in pixels  
-- \(c_x, c_y\) are the **principal point offsets**
+- $$f_x, f_y$$ are the **focal lengths** in pixels  
+- $$c_x, c_y$$ are the **principal point offsets**
 
-and distortion parameter `dist` is defined as:
+The **distortion coefficients** are typically represented as:
 
 $$
 dist = [k_1, k_2, k_3, p_1, p_2]
 $$
 
+Once the intrinsic matrix `K` and distortion coefficients `dist` are known,  
+the image can be undistorted using OpenCV as follows:
+
+```
+h, w = img.shape[:2]
+newcameramtx, roi = cv2.getOptimalNewCameraMatrix(K, dist, (w, h), 0, (w, h))
+undistorted = cv2.undistort(img, K, dist, None, newcameramtx)
+```
 
 ---
 
+## 3. ZED Mini Undistortion Example
+
+The ZED Mini's Undistortion Parameters Result are
+
+$$
+K =
+\begin{bmatrix}
+788.41415049 & 0   & 655.01692926 \\
+0   & 787.3765135 & 357.82862631 \\
+0   & 0   & 1
+\end{bmatrix}
+$$
+
+$$
+dist = [-0.3506601, 0.18558038, -0.00065609, 0.00100313, -0.05786136]
+$$
+
+<div align="center">
+  <img src="./result/origin.jpg" alt="System Architecture" width="1000"/>
+  <p><em>Figure 1: Origin image.</em></p>
+</div>
+
+<div align="center">
+  <img src="./result/chessboard.jpg" alt="System Architecture" width="1000"/>
+  <p><em>Figure 2: Chessboard Detection Result.</em></p>
+</div>
+
+<div align="center">
+  <img src="./result/undistorted.jpg" alt="System Architecture" width="1000"/>
+  <p><em>Figure 3: Undistortion Result.</em></p>
+</div>
 
 
   
