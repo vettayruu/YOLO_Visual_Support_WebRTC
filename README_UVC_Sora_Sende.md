@@ -34,3 +34,34 @@ Instead, it maps the raw image onto a **curved surface** in VR, creating a wide-
   scale="-1 1 1"
   stereo-curvedvideo="eye: right; videoId: rightVideo">
 </a-curvedimage>
+```
+
+✅ Pros
+
+- No need for real-time undistortion computation
+
+- Natural, wide-angle VR rendering
+
+⚠️ Cons
+
+- Only visually correct in VR — not for image analysis
+
+- Pixel coordinates are non-linear and not geometrically accurate
+
+## 2. Using OpenCV Undistortion
+
+If you need to perform image processing or 3D position estimation, you must use the undistorted image.
+
+### Steps
+
+### 1. Calibrate the camera
+Capture multiple checkerboard images and run `cv2.calibrateCamera()` to obtain:
+
+- Intrinsic matrix $K$
+- Distortion coefficients $dist$
+
+### 2. Apply undistortion
+Details check folder `calibration`
+
+
+
